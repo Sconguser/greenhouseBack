@@ -15,22 +15,14 @@ import java.util.Arrays;
 @RequestMapping("/greenhouse")
 public class GreenhouseController {
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "Greenhouse controller";
     }
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
+            System.out.println("Greenhouse controller initialized");
         };
     }
 

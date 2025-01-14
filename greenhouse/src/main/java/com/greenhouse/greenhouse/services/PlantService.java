@@ -2,6 +2,7 @@ package com.greenhouse.greenhouse.services;
 
 import com.greenhouse.greenhouse.models.Plant;
 import com.greenhouse.greenhouse.repositories.PlantRepository;
+import com.greenhouse.greenhouse.requests.PlantRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,11 @@ public class PlantService {
     public Plant getPlantById(Long id){
         return plantRepository.findById(id).orElseThrow(()->new RuntimeException("Plant not found"));
     }
-    public void addPlant(){
+    public void addPlant(PlantRequest plantRequest){
         Plant plant = new Plant();
-        plant.setName("Fikus");
+        plant.setName(plantRequest.getName());
+        plant.setDescription(plantRequest.getDescription());
+        plant.setRequired_humidity(plantRequest.getRequired_humidity());
         plantRepository.save(plant);
     }
 }

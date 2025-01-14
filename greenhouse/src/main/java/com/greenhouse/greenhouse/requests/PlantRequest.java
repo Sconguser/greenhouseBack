@@ -1,20 +1,18 @@
-package com.greenhouse.greenhouse.models;
+package com.greenhouse.greenhouse.requests;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Plant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PlantRequest {
     private String name;
     private String description;
     private int required_temperature;
     private int required_humidity;
-    public Plant() {
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -39,21 +37,5 @@ public class Plant {
 
     public void setRequired_humidity(int required_humidity) {
         this.required_humidity = required_humidity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
