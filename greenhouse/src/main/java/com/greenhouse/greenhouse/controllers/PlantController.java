@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/plants")
 public class PlantController {
@@ -18,13 +20,28 @@ public class PlantController {
     }
     @GetMapping("/{id}")
     public Plant getPlant(@PathVariable Long id){
-        return plantService.getPlantById(id);
+        try{
+            return plantService.getPlantById(id);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping("/")
+    public List<Plant> getAllPlants(){
+        return plantService.getAllPlants();
     }
 
     @PostMapping("/addPlant")
     public void addPlant(@RequestBody PlantRequest plantRequest){
         plantService.addPlant(plantRequest);
     }
+
+    @DeleteMapping("/{id}")
+    public void deletePlant(@PathVariable Long id){
+        plantService.deletePlant(id);
+    }
+
 
     @Bean
     public CommandLineRunner plantCommandLineRunner(ApplicationContext ctx) {
