@@ -15,30 +15,28 @@ import java.util.List;
 @RequestMapping("/plants")
 public class PlantController {
     PlantService plantService;
-    public PlantController(PlantService plantService){
+
+    public PlantController(PlantService plantService) {
         this.plantService = plantService;
     }
+
     @GetMapping("/{id}")
-    public Plant getPlant(@PathVariable Long id){
-        try{
-            return plantService.getPlantById(id);
-        }catch (Exception e){
-            return null;
-        }
+    public Plant getPlant(@PathVariable Long id) {
+        return plantService.getPlantById(id);
     }
 
     @GetMapping("/")
-    public List<Plant> getAllPlants(){
+    public List<Plant> getAllPlants() {
         return plantService.getAllPlants();
     }
 
     @PostMapping("/addPlant")
-    public void addPlant(@RequestBody PlantRequest plantRequest){
+    public void addPlant(@RequestBody PlantRequest plantRequest) {
         plantService.addPlant(plantRequest);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePlant(@PathVariable Long id){
+    public void deletePlant(@PathVariable Long id) {
         plantService.deletePlant(id);
     }
 

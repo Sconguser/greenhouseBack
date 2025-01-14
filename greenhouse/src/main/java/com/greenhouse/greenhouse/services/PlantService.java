@@ -1,5 +1,6 @@
 package com.greenhouse.greenhouse.services;
 
+import com.greenhouse.greenhouse.controllers.exceptions.PlantNotFoundException;
 import com.greenhouse.greenhouse.models.Plant;
 import com.greenhouse.greenhouse.repositories.PlantRepository;
 import com.greenhouse.greenhouse.requests.PlantRequest;
@@ -11,19 +12,21 @@ import java.util.List;
 @Service
 public class PlantService {
     private final PlantRepository plantRepository;
+
     @Autowired
-    public PlantService(PlantRepository plantRepository){
+    public PlantService(PlantRepository plantRepository) {
         this.plantRepository = plantRepository;
     }
-    public Plant getPlantById(Long id){
-        return plantRepository.findById(id).orElseThrow(()->new RuntimeException("Plant not found"));
+
+    public Plant getPlantById(Long id) {
+        return plantRepository.findById(id).orElseThrow(() -> new PlantNotFoundException("Plant not found"));
     }
 
-    public List<Plant> getAllPlants(){
+    public List<Plant> getAllPlants() {
         return plantRepository.findAll();
     }
 
-    public void addPlant(PlantRequest plantRequest){
+    public void addPlant(PlantRequest plantRequest) {
         Plant plant = new Plant();
         plant.setName(plantRequest.getName());
         plant.setDescription(plantRequest.getDescription());
@@ -31,7 +34,7 @@ public class PlantService {
         plantRepository.save(plant);
     }
 
-    public void deletePlant(Long id){
+    public void deletePlant(Long id) {
         plantRepository.deleteById(id);
     }
 }
