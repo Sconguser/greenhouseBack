@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/plants")
 public class PlantController {
-    @Autowired
     PlantService plantService;
     public PlantController(PlantService plantService){
         this.plantService = plantService;

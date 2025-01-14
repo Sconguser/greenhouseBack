@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PlantService {
-    @Autowired
     private final PlantRepository plantRepository;
+    @Autowired
     public PlantService(PlantRepository plantRepository){
         this.plantRepository = plantRepository;
     }

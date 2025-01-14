@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 ///TODO: vulnerability w dependencies
 @SpringBootApplication
-@ComponentScan({"com.greenhouse.greenhouse.repositories"}) /// TODO: zobaczyc co to
 public class GreenhouseApplication {
 
 	public static void main(String[] args) {
