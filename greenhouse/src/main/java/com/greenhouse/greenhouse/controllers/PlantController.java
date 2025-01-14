@@ -2,14 +2,13 @@ package com.greenhouse.greenhouse.controllers;
 
 import com.greenhouse.greenhouse.models.Plant;
 import com.greenhouse.greenhouse.services.PlantService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/plants")
 public class PlantController {
+    @Autowired
     PlantService plantService;
     public PlantController(PlantService plantService){
         this.plantService = plantService;
@@ -17,5 +16,10 @@ public class PlantController {
     @GetMapping("/{id}")
     public Plant getPlant(@PathVariable Long id){
         return plantService.getPlantById(id);
+    }
+
+    @PostMapping("/addPlant")
+    public void addPlant(){
+        plantService.addPlant();
     }
 }
