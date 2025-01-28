@@ -15,33 +15,37 @@ import java.util.List;
 public class PlantController {
     PlantService plantService;
 
-    public PlantController(PlantService plantService) {
+    public PlantController (PlantService plantService) {
         this.plantService = plantService;
     }
 
     @GetMapping("/{id}")
-    public PlantResponse getPlant(@PathVariable Long id) {
+    public PlantResponse getPlant (@PathVariable Long id) {
         return plantService.getPlantById(id);
     }
 
     @GetMapping("/")
-    public List<PlantResponse> getAllPlants() {
+    public List<PlantResponse> getAllPlants () {
         return plantService.getAllPlants();
     }
 
     @PostMapping("/addPlant")
-    public void addPlant(@RequestBody PlantRequest plantRequest) {
+    public void addPlant (@RequestBody PlantRequest plantRequest) {
         plantService.addPlant(plantRequest);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePlant(@PathVariable Long id) {
+    public void deletePlant (@PathVariable Long id) {
         plantService.deletePlant(id);
     }
 
+    @PatchMapping("/{id}")
+    public void updatePlant (@PathVariable Long id, @RequestBody PlantRequest plantRequest) {
+        plantService.updatePlant(id, plantRequest);
+    }
 
     @Bean
-    public CommandLineRunner plantCommandLineRunner(ApplicationContext ctx) {
+    public CommandLineRunner plantCommandLineRunner (ApplicationContext ctx) {
         return args -> {
             System.out.println("Plant controller initialized");
         };

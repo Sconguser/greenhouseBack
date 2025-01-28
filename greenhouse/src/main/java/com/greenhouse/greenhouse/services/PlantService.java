@@ -55,4 +55,28 @@ public class PlantService {
         plantRepository.deleteById(id);
     }
 
+    public void updatePlant (Long id, PlantRequest plantRequest) {
+        Plant plant = plantRepository.findById(id)
+                .orElseThrow(() -> new PlantNotFoundException("Plant not found"));
+
+        if (plantRequest.getName() != null) {
+            plant.setName(plantRequest.getName());
+        }
+        if (plantRequest.getDescription() != null) {
+            plant.setDescription(plantRequest.getDescription());
+        }
+        if (plantRequest.getRequired_temperature() != null) {
+            plant.setRequired_temperature(plantRequest.getRequired_temperature());
+        }
+        if (plantRequest.getRequired_humidity() != null) {
+            plant.setRequired_humidity(plantRequest.getRequired_humidity());
+        }
+        if (plantRequest.getImage_data() != null) {
+            plant.setImage_data(Base64.getDecoder()
+                    .decode(plantRequest.getImage_data()));
+        }
+
+        plantRepository.save(plant);
+    }
+
 }

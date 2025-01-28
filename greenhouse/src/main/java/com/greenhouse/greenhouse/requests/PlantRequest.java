@@ -3,8 +3,8 @@ package com.greenhouse.greenhouse.requests;
 public class PlantRequest {
     private String name;
     private String description;
-    private int required_temperature;
-    private int required_humidity;
+    private Integer required_temperature;
+    private Integer required_humidity;
     private String image_data_base64;
 
 
@@ -24,7 +24,7 @@ public class PlantRequest {
         this.description = description;
     }
 
-    public int getRequired_temperature() {
+    public Integer getRequired_temperature() {
         return required_temperature;
     }
 
@@ -32,7 +32,7 @@ public class PlantRequest {
         this.required_temperature = required_temperature;
     }
 
-    public int getRequired_humidity() {
+    public Integer getRequired_humidity() {
         return required_humidity;
     }
 
