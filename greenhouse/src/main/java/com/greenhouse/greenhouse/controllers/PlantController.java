@@ -1,9 +1,8 @@
 package com.greenhouse.greenhouse.controllers;
 
-import com.greenhouse.greenhouse.models.Plant;
 import com.greenhouse.greenhouse.requests.PlantRequest;
+import com.greenhouse.greenhouse.responses.PlantResponse;
 import com.greenhouse.greenhouse.services.PlantService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,12 +20,12 @@ public class PlantController {
     }
 
     @GetMapping("/{id}")
-    public Plant getPlant(@PathVariable Long id) {
+    public PlantResponse getPlant(@PathVariable Long id) {
         return plantService.getPlantById(id);
     }
 
     @GetMapping("/")
-    public List<Plant> getAllPlants() {
+    public List<PlantResponse> getAllPlants() {
         return plantService.getAllPlants();
     }
 

@@ -1,12 +1,32 @@
-package com.greenhouse.greenhouse.requests;
+package com.greenhouse.greenhouse.responses;
 
-public class PlantRequest {
+public class PlantResponse {
+    private Long id;
     private String name;
     private String description;
     private int required_temperature;
     private int required_humidity;
     private String image_data_base64;
 
+    public PlantResponse(Long id, String name, String description, int required_temperature, int required_humidity,
+                         String image_data_base64)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.required_temperature = required_temperature;
+        this.required_humidity = required_humidity;
+        this.image_data_base64 = image_data_base64;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -40,11 +60,12 @@ public class PlantRequest {
         this.required_humidity = required_humidity;
     }
 
-    public String getImage_data() {
+    public String getImage_data_base64() {
         return image_data_base64;
     }
 
-    public void setImage_data(String image_data_base64) {
+    public void setImage_data_base64(String image_data_base64) {
         this.image_data_base64 = image_data_base64;
     }
+
 }

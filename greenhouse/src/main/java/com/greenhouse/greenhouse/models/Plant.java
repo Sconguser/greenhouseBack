@@ -1,9 +1,6 @@
 package com.greenhouse.greenhouse.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Plant {
@@ -14,6 +11,11 @@ public class Plant {
     private String description;
     private int required_temperature;
     private int required_humidity;
+
+    @Lob
+    @Column(length = 1000)
+    private byte[] image_data;
+
     public Plant() {
     }
 
@@ -55,5 +57,13 @@ public class Plant {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getImage_data() {
+        return image_data;
+    }
+
+    public void setImage_data(byte[] image_data) {
+        this.image_data = image_data;
     }
 }
