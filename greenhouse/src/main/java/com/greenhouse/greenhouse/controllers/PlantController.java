@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/plants")
 public class PlantController {
-    PlantService plantService;
+    private final PlantService plantService;
 
     public PlantController (PlantService plantService) {
         this.plantService = plantService;

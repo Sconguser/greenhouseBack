@@ -1,6 +1,7 @@
 package com.greenhouse.greenhouse.controllers;
 
 import com.greenhouse.greenhouse.controllers.exceptions.ErrorMessage;
+import com.greenhouse.greenhouse.controllers.exceptions.GreenhouseStatusNotFoundException;
 import com.greenhouse.greenhouse.controllers.exceptions.PlantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,22 @@ import java.util.Date;
 public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(PlantNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handlePlantNotFoundException(PlantNotFoundException plantNotFoundException, WebRequest request) {
+    public ResponseEntity<ErrorMessage> handlePlantNotFoundException (PlantNotFoundException plantNotFoundException,
+                                                                      WebRequest request)
+    {
         return composeResponse(plantNotFoundException, request, HttpStatus.NOT_FOUND);
     }
 
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    @ExceptionHandler(GreenhouseStatusNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleGreenhouseStatusNotFoundException (
+            GreenhouseStatusNotFoundException greenhouseStatusNotFoundException, WebRequest request)
+    {
+        return composeResponse(greenhouseStatusNotFoundException, request, HttpStatus.I_AM_A_TEAPOT);
+    }
 
-    private ResponseEntity<ErrorMessage> composeResponse(Exception ex, WebRequest request, HttpStatus status) {
-        ErrorMessage message = new ErrorMessage(
-                status.value(),
-                new Date(),
-                ex.getMessage(),
+    private ResponseEntity<ErrorMessage> composeResponse (Exception ex, WebRequest request, HttpStatus status) {
+        ErrorMessage message = new ErrorMessage(status.value(), new Date(), ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<ErrorMessage>(message, status);
