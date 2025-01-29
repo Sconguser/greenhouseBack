@@ -1,17 +1,28 @@
 package com.greenhouse.greenhouse.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class GreenhouseStatus {
     @Id
-    private Long id = 1L;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private double temperature;
     private double humidity;
     private Status status;
+    @OneToOne(mappedBy = "status", cascade = CascadeType.ALL)
+    private Greenhouse greenhouse;
 
     public GreenhouseStatus () {
+    }
+
+    public Greenhouse getGreenhouse () {
+        return greenhouse;
+    }
+
+    public void setGreenhouse (Greenhouse greenhouse) {
+        this.greenhouse = greenhouse;
     }
 
     public Status getStatus () {
@@ -38,4 +49,11 @@ public class GreenhouseStatus {
         this.humidity = humidity;
     }
 
+    public Long getId () {
+        return id;
+    }
+
+    public void setId (Long id) {
+        this.id = id;
+    }
 }

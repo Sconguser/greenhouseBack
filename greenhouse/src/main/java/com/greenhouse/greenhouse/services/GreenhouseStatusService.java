@@ -22,34 +22,32 @@ public class GreenhouseStatusService {
                 greenhouseStatus.getStatus());
     }
 
-    public GreenhouseStatusResponse getGreenhouseStatus () {
-        return greenhouseStatusRepository.findById(1L)
+    public GreenhouseStatusResponse getGreenhouseStatus (Long id) {
+        return greenhouseStatusRepository.findById(id)
                 .map(GreenhouseStatusService::getGreenhouseStatusResponse)
-                .orElseThrow(() -> new GreenhouseStatusNotFoundException(
-                        "Greenhouse status not found in database," + " this is a critical error." + " Status might not have been initialized properly," + " or requested machine is, in fact, a teapot"));
+                .orElseThrow(() -> new GreenhouseStatusNotFoundException("Greenhouse status not found in database"));
     }
 
-    public void setTemperature (double temperature) {
-        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus();
+    public void setTemperature (Long id, double temperature) {
+        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus(id);
         greenhouseStatus.setTemperature(temperature);
         greenhouseStatusRepository.save(greenhouseStatus);
     }
 
-    public void setHumidity (double humidity) {
-        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus();
+    public void setHumidity (Long id, double humidity) {
+        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus(id);
         greenhouseStatus.setHumidity(humidity);
         greenhouseStatusRepository.save(greenhouseStatus);
     }
 
-    public void setStatus (Status status) {
-        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus();
+    public void setStatus (Long id, Status status) {
+        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus(id);
         greenhouseStatus.setStatus(status);
         greenhouseStatusRepository.save(greenhouseStatus);
     }
 
-    private GreenhouseStatus fetchGreenhouseStatus () {
-        return greenhouseStatusRepository.findById(1L)
-                .orElseThrow(() -> new GreenhouseStatusNotFoundException(
-                        "Greenhouse status not found in database," + " this is a critical error." + " Status might not have been initialized properly," + " or requested machine is, in fact, a teapot"));
+    private GreenhouseStatus fetchGreenhouseStatus (Long id) {
+        return greenhouseStatusRepository.findById(id)
+                .orElseThrow(() -> new GreenhouseStatusNotFoundException("Greenhouse status not found in database"));
     }
 }

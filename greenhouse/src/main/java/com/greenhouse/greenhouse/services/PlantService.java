@@ -23,9 +23,9 @@ public class PlantService {
 
     private static PlantResponse getPlantResponse (Plant plant) {
         return new PlantResponse(plant.getId(), plant.getName(), plant.getDescription(),
-                plant.getRequired_temperature(), plant.getRequired_humidity(),
-                plant.getImage_data() != null ? Base64.getEncoder()
-                        .encodeToString(plant.getImage_data()) : null);
+                plant.getRequiredTemperature(), plant.getRequiredHumidity(),
+                plant.getImageData() != null ? Base64.getEncoder()
+                        .encodeToString(plant.getImageData()) : null);
     }
 
     public PlantResponse getPlantById (Long id) {
@@ -45,8 +45,8 @@ public class PlantService {
         Plant plant = new Plant();
         plant.setName(plantRequest.getName());
         plant.setDescription(plantRequest.getDescription());
-        plant.setRequired_humidity(plantRequest.getRequired_humidity());
-        plant.setImage_data(Base64.getDecoder()
+        plant.setRequiredHumidity(plantRequest.getRequired_humidity());
+        plant.setImageData(Base64.getDecoder()
                 .decode(plantRequest.getImage_data()));
         plantRepository.save(plant);
     }
@@ -66,13 +66,13 @@ public class PlantService {
             plant.setDescription(plantRequest.getDescription());
         }
         if (plantRequest.getRequired_temperature() != null) {
-            plant.setRequired_temperature(plantRequest.getRequired_temperature());
+            plant.setRequiredTemperature(plantRequest.getRequired_temperature());
         }
         if (plantRequest.getRequired_humidity() != null) {
-            plant.setRequired_humidity(plantRequest.getRequired_humidity());
+            plant.setRequiredHumidity(plantRequest.getRequired_humidity());
         }
         if (plantRequest.getImage_data() != null) {
-            plant.setImage_data(Base64.getDecoder()
+            plant.setImageData(Base64.getDecoder()
                     .decode(plantRequest.getImage_data()));
         }
 

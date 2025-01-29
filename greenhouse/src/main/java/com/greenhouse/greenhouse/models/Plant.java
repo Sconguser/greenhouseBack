@@ -2,6 +2,8 @@ package com.greenhouse.greenhouse.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Plant {
     @Id
@@ -9,12 +11,15 @@ public class Plant {
     private Long id;
     private String name;
     private String description;
-    private int required_temperature;
-    private int required_humidity;
+    private int requiredTemperature;
+    private int requiredHumidity;
 
     @Lob
-    @Column(length = 1000)
-    private byte[] image_data;
+    @Column
+    private byte[] imageData;
+    @ManyToMany(mappedBy = "plants")
+    private List<Greenhouse> greenhouses;
+
 
     public Plant() {
     }
@@ -27,20 +32,20 @@ public class Plant {
         this.description = description;
     }
 
-    public int getRequired_temperature() {
-        return required_temperature;
+    public int getRequiredTemperature () {
+        return requiredTemperature;
     }
 
-    public void setRequired_temperature(int required_temperature) {
-        this.required_temperature = required_temperature;
+    public void setRequiredTemperature (int requiredTemperature) {
+        this.requiredTemperature = requiredTemperature;
     }
 
-    public int getRequired_humidity() {
-        return required_humidity;
+    public int getRequiredHumidity () {
+        return requiredHumidity;
     }
 
-    public void setRequired_humidity(int required_humidity) {
-        this.required_humidity = required_humidity;
+    public void setRequiredHumidity (int requiredHumidity) {
+        this.requiredHumidity = requiredHumidity;
     }
 
     public String getName() {
@@ -59,11 +64,11 @@ public class Plant {
         this.id = id;
     }
 
-    public byte[] getImage_data() {
-        return image_data;
+    public byte[] getImageData () {
+        return imageData;
     }
 
-    public void setImage_data(byte[] image_data) {
-        this.image_data = image_data;
+    public void setImageData (byte[] imageData) {
+        this.imageData = imageData;
     }
 }

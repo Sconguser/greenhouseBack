@@ -17,24 +17,24 @@ public class GreenhouseStatusController {
         this.greenhouseStatusService = greenhouseStatusService;
     }
 
-    @GetMapping("/")
-    public GreenhouseStatusResponse getGreenhouseStatus () {
-        return greenhouseStatusService.getGreenhouseStatus();
+    @GetMapping("/{id}")
+    public GreenhouseStatusResponse getGreenhouseStatus (@PathVariable Long id) {
+        return greenhouseStatusService.getGreenhouseStatus(id);
     }
 
-    @PatchMapping("/setStatus")
-    public void setGreenhouseStatus (@RequestParam Status status) {
-        greenhouseStatusService.setStatus(status);
+    @PatchMapping("/setStatus/{id}")
+    public void setGreenhouseStatus (@PathVariable Long id, @RequestParam Status status) {
+        greenhouseStatusService.setStatus(id, status);
     }
 
-    @PatchMapping("/setTemperature")
-    public void setGreenhouseTemperature (@RequestParam double temperature) {
-        greenhouseStatusService.setTemperature(temperature);
+    @PatchMapping("/setTemperature/{id}")
+    public void setGreenhouseTemperature (@PathVariable Long id, @RequestParam double temperature) {
+        greenhouseStatusService.setTemperature(id, temperature);
     }
 
-    @PatchMapping("/setHumidity")
-    public void setGreenhouseHumidity (@RequestParam double humidity) {
-        greenhouseStatusService.setHumidity(humidity);
+    @PatchMapping("/setHumidity/{id}")
+    public void setGreenhouseHumidity (@PathVariable Long id, @RequestParam double humidity) {
+        greenhouseStatusService.setHumidity(id, humidity);
     }
 
     @Bean
