@@ -1,4 +1,4 @@
-package com.greenhouse.greenhouse.controllers.exceptions;
+package com.greenhouse.greenhouse.exceptions;
 
 import java.util.Date;
 

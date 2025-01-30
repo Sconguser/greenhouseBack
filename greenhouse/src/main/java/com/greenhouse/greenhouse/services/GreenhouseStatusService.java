@@ -1,6 +1,6 @@
 package com.greenhouse.greenhouse.services;
 
-import com.greenhouse.greenhouse.controllers.exceptions.GreenhouseStatusNotFoundException;
+import com.greenhouse.greenhouse.exceptions.GreenhouseStatusNotFoundException;
 import com.greenhouse.greenhouse.models.GreenhouseStatus;
 import com.greenhouse.greenhouse.models.Status;
 import com.greenhouse.greenhouse.repositories.GreenhouseStatusRepository;

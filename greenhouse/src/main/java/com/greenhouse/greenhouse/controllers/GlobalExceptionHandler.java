@@ -1,8 +1,8 @@
 package com.greenhouse.greenhouse.controllers;
 
-import com.greenhouse.greenhouse.controllers.exceptions.ErrorMessage;
-import com.greenhouse.greenhouse.controllers.exceptions.GreenhouseStatusNotFoundException;
-import com.greenhouse.greenhouse.controllers.exceptions.PlantNotFoundException;
+import com.greenhouse.greenhouse.exceptions.ErrorMessage;
+import com.greenhouse.greenhouse.exceptions.GreenhouseStatusNotFoundException;
+import com.greenhouse.greenhouse.exceptions.PlantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

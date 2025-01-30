@@ -1,4 +1,4 @@
-package com.greenhouse.greenhouse.controllers.exceptions;
+package com.greenhouse.greenhouse.exceptions;
 
 public class PlantNotFoundException extends RuntimeException{
     public PlantNotFoundException(String message){

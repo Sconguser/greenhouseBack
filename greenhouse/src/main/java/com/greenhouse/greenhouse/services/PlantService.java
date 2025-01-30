@@ -1,6 +1,6 @@
 package com.greenhouse.greenhouse.services;
 
-import com.greenhouse.greenhouse.controllers.exceptions.PlantNotFoundException;
+import com.greenhouse.greenhouse.exceptions.PlantNotFoundException;
 import com.greenhouse.greenhouse.models.Plant;
 import com.greenhouse.greenhouse.repositories.PlantRepository;
 import com.greenhouse.greenhouse.requests.PlantRequest;
