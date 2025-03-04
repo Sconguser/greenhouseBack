@@ -16,13 +16,13 @@ public class GreenhouseService {
         this.greenhouseRepository = greenhouseRepository;
     }
 
-    public GreenhouseResponse getGreenhouse (Long id) {
-        return greenhouseRepository.findById(id)
-                .orElseThrow(()->new GreenhouseNotFoundException("Requested greenhouse with ID = " + id + "was not found"));
+    private static GreenhouseResponse getGreenhouseResponse (Greenhouse greenhouse) {
+        return new GreenhouseResponse(greenhouse);
     }
 
-    private static GreenhouseResponse getGreenhouseResponse(Greenhouse greenhouse){
-        return new GreenhouseResponse(greenhouse.getId(), greenhouse.getName(), greenhouse.getLocation(),
-                greenhouse.getIpAddress(), greenhouse.getStatus());
+    public GreenhouseResponse getGreenhouse (Long id) {
+        return getGreenhouseResponse(greenhouseRepository.findById(id)
+                .orElseThrow(() -> new GreenhouseNotFoundException(
+                        "Requested greenhouse with ID = " + id + "was not found")));
     }
 }

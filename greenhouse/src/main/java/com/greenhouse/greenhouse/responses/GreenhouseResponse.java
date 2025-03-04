@@ -1,5 +1,7 @@
 package com.greenhouse.greenhouse.responses;
 
+import com.greenhouse.greenhouse.models.Greenhouse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,11 @@ public class GreenhouseResponse {
     {
         this(id, name, location, ipAddress, greenhouseStatusResponse);
         this.plantResponses.addAll(plantResponses);
+    }
+
+    public GreenhouseResponse (Greenhouse greenhouse) {
+        this(greenhouse.getId(), greenhouse.getName(), greenhouse.getLocation(), greenhouse.getIpAddress(),
+                new GreenhouseStatusResponse(greenhouse.getStatus()));
     }
 
     public Long getId () {

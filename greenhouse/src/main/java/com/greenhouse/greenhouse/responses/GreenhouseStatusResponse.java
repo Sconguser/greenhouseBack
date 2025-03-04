@@ -1,5 +1,6 @@
 package com.greenhouse.greenhouse.responses;
 
+import com.greenhouse.greenhouse.models.GreenhouseStatus;
 import com.greenhouse.greenhouse.models.Status;
 
 public class GreenhouseStatusResponse {
@@ -12,6 +13,10 @@ public class GreenhouseStatusResponse {
         this.temperature = temperature;
         this.humidity = humidity;
         this.status = status;
+    }
+
+    public GreenhouseStatusResponse (GreenhouseStatus greenhouseStatus) {
+        this(greenhouseStatus.getTemperature(), greenhouseStatus.getHumidity(), greenhouseStatus.getStatus());
     }
 
     public double getTemperature () {
