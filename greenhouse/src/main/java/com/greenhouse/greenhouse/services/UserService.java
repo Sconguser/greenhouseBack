@@ -32,6 +32,6 @@ public class UserService {
     }
 
     public UserResponse loginUser (String username, String password){
-
+        return null;
     }
 }
