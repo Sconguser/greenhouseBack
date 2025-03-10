@@ -1,39 +1,40 @@
 package com.greenhouse.greenhouse.configuration;
 
-import com.greenhouse.greenhouse.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
-@EnableWebSecurity
+
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-
-    private final UserDetailsServiceImpl userDetailsService;
-
-    public SecurityConfig (UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**")
-                        .permitAll()
+        http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF if not needed
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**")
+                        .permitAll() // Public endpoints
                         .anyRequest()
-                        .authenticated())
+                        .authenticated() // Secure other endpoints
+                )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> {
-                }))
-                .userDetailsService(userDetailsService)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                }));
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager (
+            AuthenticationConfiguration authenticationConfiguration) throws Exception
+    {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
@@ -41,3 +42,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+

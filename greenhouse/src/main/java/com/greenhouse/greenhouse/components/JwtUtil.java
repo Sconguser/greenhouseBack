@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String secret = "secret";
+    private static final String secret = "secretsecretsecretsecretsecretsecretsecretsecretsecret";
     private static final Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     private final int tokenExpiration = 1000 * 60 * 60;
 
