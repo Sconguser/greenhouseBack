@@ -2,7 +2,7 @@ package com.greenhouse.greenhouse.controllers;
 
 import com.greenhouse.greenhouse.requests.UserRequest;
 import com.greenhouse.greenhouse.responses.UserResponse;
-import com.greenhouse.greenhouse.services.UserService;
+import com.greenhouse.greenhouse.services.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
-
-    private final UserService userService;
+    private final UserDetailsServiceImpl userService;
 
     public AuthController (AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                           UserDetailsService userDetailsService, UserService userService)
+                           UserDetailsService userDetailsService, UserDetailsServiceImpl userService)
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;

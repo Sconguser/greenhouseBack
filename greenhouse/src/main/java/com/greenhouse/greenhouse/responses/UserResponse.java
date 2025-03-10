@@ -1,7 +1,7 @@
 package com.greenhouse.greenhouse.responses;
 
 import com.greenhouse.greenhouse.models.Role;
-import com.greenhouse.greenhouse.models.User;
+import com.greenhouse.greenhouse.models.UserEntity;
 
 public class UserResponse {
     private Long id;
@@ -10,10 +10,10 @@ public class UserResponse {
 
     private Role role;
 
-    public UserResponse (User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.role = user.getRole();
+    public UserResponse (UserEntity userEntity) {
+        this.id = userEntity.getId();
+        this.username = userEntity.getUsername();
+        this.role = userEntity.getRole();
     }
 
     public Long getId () {
