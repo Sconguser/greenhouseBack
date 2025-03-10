@@ -22,7 +22,6 @@ public class AuthController {
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
         this.userService = userService;
     }
 
