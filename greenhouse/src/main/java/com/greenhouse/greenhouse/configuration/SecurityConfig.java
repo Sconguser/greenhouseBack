@@ -1,5 +1,7 @@
 package com.greenhouse.greenhouse.configuration;
 
+import com.greenhouse.greenhouse.services.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +18,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF if not needed
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**")
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**", "/auth/**")
                         .permitAll() // Public endpoints
                         .anyRequest()
                         .authenticated() // Secure other endpoints

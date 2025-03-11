@@ -3,69 +3,64 @@ package com.greenhouse.greenhouse.controllers;
 import com.greenhouse.greenhouse.models.Role;
 import com.greenhouse.greenhouse.models.UserEntity;
 import com.greenhouse.greenhouse.repositories.UserRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.greenhouse.greenhouse.requests.UserRequest;
+import com.greenhouse.greenhouse.responses.LoginResponse;
+import com.greenhouse.greenhouse.responses.UserResponse;
+import com.greenhouse.greenhouse.services.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private static final String SECRET = "mysecretkeymysecretkeymysecretkey";
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
-    public AuthController (AuthenticationManager authenticationManager, UserRepository userRepository,
-                           PasswordEncoder passwordEncoder)
+    public AuthController (AuthService authService)
     {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.authService = authService;
     }
 
     @PostMapping("/register")
-    public String register (@RequestParam String username, @RequestParam String password) {
-        if (userRepository.findByUsername(username)
-                .isPresent())
-        {
-            return "Username already taken";
+    public ResponseEntity<?> register (@RequestBody UserRequest userRequest, HttpServletResponse response) {
+        boolean registered = authService.register(userRequest.getUsername(), userRequest.getPassword());
+        if (!registered) {
+            return ResponseEntity.badRequest()
+                    .body("User already exists");
         }
-        UserEntity user = new UserEntity();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.USER);
-        userRepository.save(user);
-        return "User registered successfully";
+        return ResponseEntity.ok("User created");
     }
 
     @PostMapping("/login")
-    public String login (@RequestParam String username, @RequestParam String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
+    public ResponseEntity<UserResponse> login (@RequestBody UserRequest userRequest, HttpServletResponse response) {
+        LoginResponse loginResponse = authService.authenticateAndGenerateToken(userRequest.getUsername(),
+                userRequest.getPassword());
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+        response.setHeader("Authorization", "Bearer " + loginResponse.getToken());
+        UserResponse userResponse = new UserResponse(loginResponse.getUsername(),
+                Role.valueOf(loginResponse.getRole()));
 
-        return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .claim("roles", roles)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 86400000))
-                .signWith(SignatureAlgorithm.HS256, SECRET)
-                .compact();
+        return ResponseEntity.ok()
+                .body(userResponse);
+    }
+
+    @Bean
+    public CommandLineRunner authCommandLineRunner (ApplicationContext ctx) {
+        return args -> {
+            System.out.println("Auth controller initialized");
+        };
     }
 }

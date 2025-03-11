@@ -2,26 +2,17 @@ package com.greenhouse.greenhouse.responses;
 
 import com.greenhouse.greenhouse.models.Role;
 import com.greenhouse.greenhouse.models.UserEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserResponse {
-    private Long id;
 
     private String username;
 
     private Role role;
 
-    public UserResponse (UserEntity userEntity) {
-        this.id = userEntity.getId();
-        this.username = userEntity.getUsername();
-        this.role = userEntity.getRole();
-    }
-
-    public Long getId () {
-        return id;
-    }
-
-    public void setId (Long id) {
-        this.id = id;
+    public UserResponse (String username, Role role) {
+        this.username = username;
+        this.role = role;
     }
 
     public String getUsername () {
