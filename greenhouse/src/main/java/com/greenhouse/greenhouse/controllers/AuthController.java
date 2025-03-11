@@ -1,27 +1,19 @@
 package com.greenhouse.greenhouse.controllers;
 
 import com.greenhouse.greenhouse.models.Role;
-import com.greenhouse.greenhouse.models.UserEntity;
-import com.greenhouse.greenhouse.repositories.UserRepository;
 import com.greenhouse.greenhouse.requests.UserRequest;
 import com.greenhouse.greenhouse.responses.LoginResponse;
 import com.greenhouse.greenhouse.responses.UserResponse;
 import com.greenhouse.greenhouse.services.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")

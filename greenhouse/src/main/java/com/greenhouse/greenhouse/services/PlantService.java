@@ -22,10 +22,9 @@ public class PlantService {
     }
 
     private static PlantResponse getPlantResponse (Plant plant) {
-        return new PlantResponse(plant.getId(), plant.getName(), plant.getDescription(),
-                plant.getRequiredTemperature(), plant.getRequiredHumidity(),
-                plant.getImageData() != null ? Base64.getEncoder()
-                        .encodeToString(plant.getImageData()) : null);
+        return new PlantResponse(plant.getId(), plant.getName(), plant.getDescription(), plant.getRequiredTemperature(),
+                plant.getRequiredHumidity(), plant.getImageData() != null ? Base64.getEncoder()
+                .encodeToString(plant.getImageData()) : null);
     }
 
     public PlantResponse getPlantById (Long id) {
@@ -46,8 +45,10 @@ public class PlantService {
         plant.setName(plantRequest.getName());
         plant.setDescription(plantRequest.getDescription());
         plant.setRequiredHumidity(plantRequest.getRequired_humidity());
-        plant.setImageData(Base64.getDecoder()
-                .decode(plantRequest.getImage_data()));
+        if (plantRequest.getImage_data() != null) {
+            plant.setImageData(Base64.getDecoder()
+                    .decode(plantRequest.getImage_data()));
+        }
         plantRepository.save(plant);
     }
 

@@ -1,20 +1,18 @@
 package com.greenhouse.greenhouse.services;
 
+import com.greenhouse.greenhouse.configuration.JwtConfig;
 import com.greenhouse.greenhouse.models.Role;
 import com.greenhouse.greenhouse.models.UserEntity;
 import com.greenhouse.greenhouse.repositories.UserRepository;
-import com.greenhouse.greenhouse.requests.UserRequest;
 import com.greenhouse.greenhouse.responses.LoginResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 
@@ -23,16 +21,16 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final String jwtSecretKey;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     public AuthService (AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder,
-                        @Value("${jwt.secret.key}") String jwtSecretKey, UserRepository userRepository)
+                        UserRepository userRepository, JwtService jwtService)
     {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
-        this.jwtSecretKey = jwtSecretKey;
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     public LoginResponse authenticateAndGenerateToken (String username, String password) {
@@ -45,14 +43,8 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Generate the JWT token
-        String token = Jwts.builder()
-                .subject(user.getUsername())
-                .claim("roles", user.getRole()
-                        .name())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
-                .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
-                .compact();
+        String token = jwtService.generateToken(username, user.getRole()
+                .name());
 
         // Return the token and user details
         return new LoginResponse(token, user.getUsername(), user.getRole()
