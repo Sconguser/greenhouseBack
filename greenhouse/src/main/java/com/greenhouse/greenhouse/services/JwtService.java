@@ -11,7 +11,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final long EXPIRATION_TIME = 86400000; // 1 dzień
+    @Value("${jwt.expiration.time}")
+    private long expirationTime;
     @Value("${jwt.secret.key}")
     private String jwtSecretKey;
 
@@ -20,7 +21,7 @@ public class JwtService {
                 .setSubject(username)
                 .claim("roles", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(SignatureAlgorithm.HS256, new SecretKeySpec(jwtSecretKey.getBytes(), "HmacSHA256"))
                 .compact();
     }
