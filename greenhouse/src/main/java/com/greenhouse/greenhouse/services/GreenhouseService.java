@@ -29,9 +29,13 @@ public class GreenhouseService {
     }
 
     public GreenhouseResponse getGreenhouse (Long id) {
-        return getGreenhouseResponse(greenhouseRepository.findById(id)
+        return getGreenhouseResponse(getGreenhouseEntity(id));
+    }
+
+    public Greenhouse getGreenhouseEntity (Long id) {
+        return greenhouseRepository.findById(id)
                 .orElseThrow(() -> new GreenhouseNotFoundException(
-                        "Requested greenhouse with ID = " + id + "was not found")));
+                        "Requested greenhouse with ID = " + id + "was not found"));
     }
 
     public boolean addPlantToGreenhouse (Long greenhouseId, Long plantId) {
@@ -56,7 +60,7 @@ public class GreenhouseService {
                     Plant plant = new Plant();
                     plant.setName(plantRequest.getName());
                     plant.setDescription(plantRequest.getDescription());
-                    plant.setRequiredHumidity(plantRequest.getRequired_humidity());
+                    plant.setMinHumidity(plantRequest.getRequired_humidity());
                     if (plantRequest.getImage_data() != null) {
                         plant.setImageData(Base64.getDecoder()
                                 .decode(plantRequest.getImage_data()));

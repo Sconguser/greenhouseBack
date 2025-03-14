@@ -11,56 +11,59 @@ public class Plant {
     private Long id;
     private String name;
     private String description;
-    private int requiredTemperature;
-    private int requiredHumidity;
+    private int minTemperature;
 
+    private int maxTemperature;
+
+    private int minHumidity;
+    private int maxHumidity;
     @Lob
     @Column
     private byte[] imageData;
+
     @ManyToMany(mappedBy = "plants")
     private List<Greenhouse> greenhouses;
 
-
-    public Plant() {
+    public Plant () {
     }
 
-    public String getDescription() {
+    public String getDescription () {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription (String description) {
         this.description = description;
     }
 
-    public int getRequiredTemperature () {
-        return requiredTemperature;
+    public int getMinTemperature () {
+        return minTemperature;
     }
 
-    public void setRequiredTemperature (int requiredTemperature) {
-        this.requiredTemperature = requiredTemperature;
+    public void setMinTemperature (int minTemperature) {
+        this.minTemperature = minTemperature;
     }
 
-    public int getRequiredHumidity () {
-        return requiredHumidity;
+    public int getMinHumidity () {
+        return minHumidity;
     }
 
-    public void setRequiredHumidity (int requiredHumidity) {
-        this.requiredHumidity = requiredHumidity;
+    public void setMinHumidity (int minHumidity) {
+        this.minHumidity = minHumidity;
     }
 
-    public String getName() {
+    public String getName () {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName (String name) {
         this.name = name;
     }
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
@@ -70,5 +73,21 @@ public class Plant {
 
     public void setImageData (byte[] imageData) {
         this.imageData = imageData;
+    }
+
+    public int getMaxTemperature () {
+        return maxTemperature;
+    }
+
+    public void setMaxTemperature (int maxTemperature) {
+        this.maxTemperature = maxTemperature;
+    }
+
+    public int getMaxHumidity () {
+        return maxHumidity;
+    }
+
+    public void setMaxHumidity (int maxHumidity) {
+        this.maxHumidity = maxHumidity;
     }
 }

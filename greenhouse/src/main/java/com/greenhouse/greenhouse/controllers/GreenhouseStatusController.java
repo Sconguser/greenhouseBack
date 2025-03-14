@@ -1,11 +1,13 @@
 package com.greenhouse.greenhouse.controllers;
 
 import com.greenhouse.greenhouse.models.Status;
+import com.greenhouse.greenhouse.requests.GreenhouseStatusRequest;
 import com.greenhouse.greenhouse.responses.GreenhouseStatusResponse;
 import com.greenhouse.greenhouse.services.GreenhouseStatusService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,30 +19,35 @@ public class GreenhouseStatusController {
         this.greenhouseStatusService = greenhouseStatusService;
     }
 
-    @GetMapping("/{id}")
-    public GreenhouseStatusResponse getGreenhouseStatus (@PathVariable Long id) {
-        return greenhouseStatusService.getGreenhouseStatus(id);
+    @GetMapping("/{greenhouseId}")
+    public GreenhouseStatusResponse getGreenhouseStatus (@PathVariable Long greenhouseId) {
+        return greenhouseStatusService.getGreenhouseStatus(greenhouseId);
     }
 
-    @PatchMapping("/setStatus/{id}")
-    public void setGreenhouseStatus (@PathVariable Long id, @RequestParam Status status) {
-        greenhouseStatusService.setStatus(id, status);
+    @PostMapping("/{greenhouseId}")
+    public ResponseEntity<Void> statusCheck(@PathVariable Long greenhouseId, @RequestBody GreenhouseStatusRequest greenhouseStatus){
+
     }
 
-    @PatchMapping("/setTemperature/{id}")
-    public void setGreenhouseTemperature (@PathVariable Long id, @RequestParam double temperature) {
-        greenhouseStatusService.setTemperature(id, temperature);
+    @PatchMapping("/setStatus/{greenhouseId}")
+    public void setGreenhouseStatus (@PathVariable Long greenhouseId, @RequestParam Status status) {
+        greenhouseStatusService.setStatus(greenhouseId, status);
     }
 
-    @PatchMapping("/setHumidity/{id}")
-    public void setGreenhouseHumidity (@PathVariable Long id, @RequestParam double humidity) {
-        greenhouseStatusService.setHumidity(id, humidity);
+    @PatchMapping("/setTemperature/{greenhouseId}")
+    public void setGreenhouseTemperature (@PathVariable Long greenhouseId, @RequestParam double temperature) {
+        greenhouseStatusService.setTemperature(greenhouseId, temperature);
+    }
+
+    @PatchMapping("/setHumidity/{greenhouseId}")
+    public void setGreenhouseHumidity (@PathVariable Long greenhouseId, @RequestParam double humidity) {
+        greenhouseStatusService.setHumidity(greenhouseId, humidity);
     }
 
     @Bean
     public CommandLineRunner commandLineRunner (ApplicationContext ctx) {
         return args -> {
-            System.out.println("Greenhouse controller initialized");
+            System.out.println("Greenhouse status controller initialized");
         };
     }
 

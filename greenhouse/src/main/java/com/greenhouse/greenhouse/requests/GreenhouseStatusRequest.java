@@ -1,10 +1,20 @@
 package com.greenhouse.greenhouse.requests;
 
-public class GreenhouseStatusRequest {
-    private double temperature;
-    private double humidity;
+import com.greenhouse.greenhouse.models.Status;
 
-    public double getTemperature () {
+public class GreenhouseStatusRequest {
+    private Double temperature;
+    private Double humidity;
+
+    private Status status;
+
+    public GreenhouseStatusRequest (Double temperature, Double humidity, Status status) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.status = status;
+    }
+
+    public Double getTemperature () {
         return temperature;
     }
 
@@ -12,7 +22,7 @@ public class GreenhouseStatusRequest {
         this.temperature = temperature;
     }
 
-    public double getHumidity () {
+    public Double getHumidity () {
         return humidity;
     }
 
@@ -20,4 +30,12 @@ public class GreenhouseStatusRequest {
         this.humidity = humidity;
     }
 
+
+    public Status getStatus () {
+        return status;
+    }
+
+    public void setStatus (Status status) {
+        this.status = status;
+    }
 }

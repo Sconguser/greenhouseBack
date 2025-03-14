@@ -3,7 +3,9 @@ package com.greenhouse.greenhouse.services;
 import com.greenhouse.greenhouse.exceptions.GreenhouseStatusNotFoundException;
 import com.greenhouse.greenhouse.models.GreenhouseStatus;
 import com.greenhouse.greenhouse.models.Status;
+import com.greenhouse.greenhouse.repositories.GreenhouseRepository;
 import com.greenhouse.greenhouse.repositories.GreenhouseStatusRepository;
+import com.greenhouse.greenhouse.requests.GreenhouseStatusRequest;
 import com.greenhouse.greenhouse.responses.GreenhouseStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class GreenhouseStatusService {
     private final GreenhouseStatusRepository greenhouseStatusRepository;
+    private final GreenhouseRepository greenhouseRepository;
 
-    @Autowired
-    public GreenhouseStatusService (GreenhouseStatusRepository greenhouseStatusRepository) {
+    public GreenhouseStatusService (GreenhouseStatusRepository greenhouseStatusRepository,
+                                    GreenhouseRepository greenhouseRepository)
+    {
         this.greenhouseStatusRepository = greenhouseStatusRepository;
+        this.greenhouseRepository = greenhouseRepository;
     }
 
     private static GreenhouseStatusResponse getGreenhouseStatusResponse (GreenhouseStatus greenhouseStatus) {
@@ -40,10 +45,34 @@ public class GreenhouseStatusService {
         greenhouseStatusRepository.save(greenhouseStatus);
     }
 
+    public void setGreenhouseStatus (Long id, GreenhouseStatusRequest greenhouseStatusRequest) {
+        GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus(id);
+        Double requestHumidity = greenhouseStatusRequest.getHumidity();
+        if (requestHumidity != null) {
+            greenhouseStatus.setHumidity(requestHumidity);
+        }
+        Double requestTemperature = greenhouseStatusRequest.getTemperature();
+        if (requestTemperature != null) {
+            greenhouseStatus.setTemperature(requestTemperature);
+        }
+        Status requestStatus = greenhouseStatusRequest.getStatus();
+        if (requestStatus != null) {
+            greenhouseStatus.setStatus(requestStatus);
+        }
+        greenhouseStatusRepository.save(greenhouseStatus);
+    }
+
+
+    ///TODO: potencjalnie do wyrzucenia razem z innymi metodami tutaj
     public void setStatus (Long id, Status status) {
         GreenhouseStatus greenhouseStatus = fetchGreenhouseStatus(id);
         greenhouseStatus.setStatus(status);
         greenhouseStatusRepository.save(greenhouseStatus);
+    }
+
+    public void statusCheck (Long greenhouseId, GreenhouseStatusRequest greenhouseStatusRequest) {
+        setGreenhouseStatus(greenhouseId, greenhouseStatusRequest);
+
     }
 
     private GreenhouseStatus fetchGreenhouseStatus (Long id) {

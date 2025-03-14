@@ -22,8 +22,8 @@ public class PlantService {
     }
 
     private static PlantResponse getPlantResponse (Plant plant) {
-        return new PlantResponse(plant.getId(), plant.getName(), plant.getDescription(), plant.getRequiredTemperature(),
-                plant.getRequiredHumidity(), plant.getImageData() != null ? Base64.getEncoder()
+        return new PlantResponse(plant.getId(), plant.getName(), plant.getDescription(), plant.getMinTemperature(),
+                plant.getMinHumidity(), plant.getImageData() != null ? Base64.getEncoder()
                 .encodeToString(plant.getImageData()) : null);
     }
 
@@ -44,7 +44,7 @@ public class PlantService {
         Plant plant = new Plant();
         plant.setName(plantRequest.getName());
         plant.setDescription(plantRequest.getDescription());
-        plant.setRequiredHumidity(plantRequest.getRequired_humidity());
+        plant.setMinHumidity(plantRequest.getRequired_humidity());
         if (plantRequest.getImage_data() != null) {
             plant.setImageData(Base64.getDecoder()
                     .decode(plantRequest.getImage_data()));
@@ -67,10 +67,10 @@ public class PlantService {
             plant.setDescription(plantRequest.getDescription());
         }
         if (plantRequest.getRequired_temperature() != null) {
-            plant.setRequiredTemperature(plantRequest.getRequired_temperature());
+            plant.setMinTemperature(plantRequest.getRequired_temperature());
         }
         if (plantRequest.getRequired_humidity() != null) {
-            plant.setRequiredHumidity(plantRequest.getRequired_humidity());
+            plant.setMinHumidity(plantRequest.getRequired_humidity());
         }
         if (plantRequest.getImage_data() != null) {
             plant.setImageData(Base64.getDecoder()
